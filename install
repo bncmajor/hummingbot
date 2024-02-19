@@ -2,6 +2,14 @@
 
 cd $(dirname $0)
 
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile 
+sudo mkswap /swapfile 
+sudo swapon /swapfile 
+sudo cp /etc/fstab /etc/fstab.bak 
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+
 # Compatibility logic for older Anaconda versions.
 if [ "${CONDA_EXE} " == " " ]; then
     CONDA_EXE=$((find /opt/conda/bin/conda || find ~/anaconda3/bin/conda || \
